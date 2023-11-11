@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<!-- You MUST include jQuery 3.4+ before Fomantic -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
+"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
+
+
+
+<html>
+<head>
+  <!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properties -->
+  <title>Save Editor</title>
+
+  <script>
+
+  function download(content, fileName, contentType) {
+      var a = document.createElement("a");
+      var file = new Blob([content], {type: contentType});
+      a.href = URL.createObjectURL(file);
+      a.download = fileName;
+      a.click();
+  }
+
+
+  function exportSave() {
+    
+    let stateList = document.querySelectorAll('#manthis')
+    let newFlagData = {}
+
+
+    for (let i = 0; i < stateList.length; i++) {
+      
+      let tableRow = stateList[i].parentElement.parentElement
+      let flagName = tableRow.getElementsByClassName("womper")[0].innerText
+      let checked = stateList[i].getElementsByClassName("mike")[0].checked
+
+      newFlagData[flagName] = checked; 
+
+
+    }
+
+    let currentSave = JSON.parse(sessionStorage.getItem("baseData"));
+    
+    
+
+    $.each(newFlagData, function(i,v) {
+        const dataInd = currentSave.flags.indexOf(i);
+
+        if (dataInd > -1) {
+          if (v == false) {
+            currentSave.flags.splice(dataInd,1);
+          } 
+        } else {
+          if (v == true) {
+            currentSave.flags.push(i)
+          }
+        }
+
+    })
+
+    console.log(currentSave);
+    download(JSON.stringify(currentSave), 'save.json', 'text/plain')
+
+    $.toast({
+    title: 'success',
+    message: 'save file edited & downloaded succesfully',
+    showProgress: 'bottom',
+    classProgress: 'teal'
+  })
+  ;
+}
+
+
+  
+  </script>
+
+  <style type="text/css">
+    body {
+      background-color: #DADADA;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 650px;
+    }
+  </style>
+ 
+</head>
+<body>
+
+  <div class="ui fixed nag" id="fixednag">
+    ensure you back up your save file; this editor is wip and i'm not responsible if your save file corrupts
+    <i class="close icon"></i>
+  </div>
+
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal header">
+      <div class="content">
+        risk of rain returns - save file editor
+      </div>
+
+    </h2>
+    <div class="ui segment">
+        <div class="ui negative message hidden" id = "rarr">
+            <i class="close icon"></i>
+            <div class="header">
+              please select the right file yea
+            </div>
+            <p>that is not ur save file 💀💀💀</p>
+          </div>
+
+        <div class="ui disabled dimmer" id = "loadingting">
+          <div class="ui loader"></div>
+        </div>
+
+        <div class="ui file action input">
+            <input id="actionfileinput" type="file">
+            <label for="actionfileinput" class="ui blue button">
+               <i class="upload"></i>
+                  choose save file
+            </label>
+          </div>
+          
+        <p></p>
+      </div>
+    
+
+      <div class="ui top attached menu">
+        <div class="ui dropdown icon item">
+          <i class="wrench icon"></i>
+          <div class="menu">
+            <div class="item">
+              Reset 
+            </div>
+            <div class="divider"></div>
+            <div class="header">
+              export
+            </div>
+            <div class="item" onclick="exportSave()">
+              Download
+            </div>
+          </div>
+        </div>
+        <div class="right menu">
+          <div class="ui right aligned category search item">
+            <div class="ui transparent icon input">
+              <input class="prompt" type="text" placeholder="search flags...">
+            </div>
+            <div class="results"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ui bottom attached segment">
+        
+
+        <table class="ui compact celled definition table" id="mtb">
+          <thead class="full-width">
+            <tr>
+              <th></th>
+              <th>Flag Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="saveinfo">
+            <script id="user-template" type="x-tmpl-mustache">
+              {{#flags}}
+            <tr>
+              <td class="collapsing"">
+                <div class="ui fitted checkbox" id="manthis">
+                  {{#state}}
+                  <input type="checkbox" name="example" class="mike" checked>
+                  {{/state}}
+                  {{^state}}
+                  <input type="checkbox" name="example" class="mike">
+                  {{/state}}
+                  <label></label>
+                </div>
+                
+              </td>
+              <td class="womper">{{name}}</td>
+              <td class="descr">{{desc}}</td>
+            </tr>
+            {{/flags}}
+          </script>
+          </tbody>
+         
+        </table>
+
+
+
+      </div>
+
+
+
+    <div class="ui message">
+      your save file is likely in (placeholder)
+    </div>
+  </div>
+</div>
+
+<script>
+    $('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  })
+
+  
+;
+
+
+$('#fixednag')
+.nag({
+  persist:true
+})
+;
+</script>
+<script>
+  $('.ui.dropdown')
+  .dropdown()
+;
+</script>
+
+<script>
+    const inputElement = document.getElementById("actionfileinput");
+    document.getElementById("loadingting").className = "ui active dimmer";
+    inputElement.addEventListener("change", handleFiles, false);
+    function handleFiles() {
+    const fileList = this.files; 
+    var a = Array.from(fileList);
+    
+    var saveFile = a[0]
+
+    const recognizedFlag = {
+      "flags": [
+        {name:"challenge_unlock_acrid_completed",  desc:"unlock acrid yurr"},
+        
+      ]
+    }
+
+    const addNames = ["huntress", "pilot", "miner", "mercenary", "chef", "mage", "janitor"]
+    
+    for (let i = 0; i < addNames.length; i++) {
+      console.log("asda");
+      recognizedFlag["flags"].push({name:"challenge_unlock_" + addNames[i] + "_completed", desc:"unlock " + addNames[i] + " yurrr", state:""});
+    }
+
+    if (saveFile.type == "application/json") {
+      saveFile.text().then( resp => {
+        var saveData = JSON.parse(resp);
+        console.log(saveData["flags"])
+
+        $.each(recognizedFlag["flags"], function(i,v) {
+          console.log("flag")
+          if (saveData["flags"].includes(v.name)) {
+            console.log("trueman")
+            recognizedFlag["flags"][i].state = "true";
+          }
+        })
+        const temp = document.getElementById('user-template').innerHTML;
+        const rendered = Mustache.render(temp, recognizedFlag)
+        console.log(rendered);
+        console.log(recognizedFlag);
+        document.getElementById('saveinfo').innerHTML = rendered;
+
+        sessionStorage.setItem("baseData", JSON.stringify(saveData));
+
+      })
+      
+
+    } else {
+        document.getElementById("rarr").className = "ui negative message"
+    }
+
+    }
+
+    document.getElementById("loadingting").className = "ui disabled dimmer"
+   </script>
+
+<script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script>
+  kofiWidgetOverlay.draw('dynobytes', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'donate :)',
+    'floating-chat.donateButton.background-color': '#323842',
+    'floating-chat.donateButton.text-color': '#fff'
+  });
+</script>
+
+</body>
+
+</html>
