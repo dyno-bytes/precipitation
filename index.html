@@ -80,7 +80,6 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
 
     })
 
-    console.log(currentSave);
     download(JSON.stringify(currentSave), 'save.json', 'text/plain')
 
     $.toast({
@@ -253,6 +252,7 @@ $('#fixednag')
 </script>
 
 <script>
+    console.log('cheers for using');
     const inputElement = document.getElementById("actionfileinput");
     document.getElementById("loadingting").className = "ui active dimmer";
     inputElement.addEventListener("change", handleFiles, false);
@@ -284,19 +284,17 @@ $('#fixednag')
     if (saveFile.type == "application/json") {
       saveFile.text().then( resp => {
         var saveData = JSON.parse(resp);
-        console.log(saveData["flags"])
 
         $.each(recognizedFlag["flags"], function(i,v) {
-          console.log("flag")
+
           if (saveData["flags"].includes(v.name)) {
-            console.log("trueman")
+
             recognizedFlag["flags"][i].state = "true";
           }
         })
         const temp = document.getElementById('user-template').innerHTML;
         const rendered = Mustache.render(temp, recognizedFlag)
-        console.log(rendered);
-        console.log(recognizedFlag);
+
         document.getElementById('saveinfo').innerHTML = rendered;
 
         sessionStorage.setItem("baseData", JSON.stringify(saveData));
