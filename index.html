@@ -267,11 +267,13 @@ $('#fixednag')
       ]
     }
 
-    const addNames = ["pilot", "miner", "mercenary", "chef", "mage", "janitor", "acrid", "engineer", "bandit", "enforcer", "sniper", "loader", "drifter"]
+    const addNames = ["huntress", "commando", "pilot", "miner", "mercenary", "chef", "mage", "janitor", "acrid", "engineer", "bandit", "enforcer", "sniper", "loader", "drifter"]
     const addSkills = ["x","c","v","z"]
 
     for (let i = 0; i < addNames.length; i++) {
+      if (addNames[i] != "huntress" || addNames[i] != "commando" ) {
       recognizedFlag["flags"].push({name:"challenge_unlock_" + addNames[i] + "_completed", desc:"unlock " + addNames[i] + "", state:""});
+      }
       for (let k = 0; k < addSkills.length; k++) {
         recognizedFlag["flags"].push({name: "challenge_unlock_" + addNames[i] + "_" + addSkills[k] + "2_completed", desc:"unlock " + addNames[i] + " alternate " + addSkills[k].toUpperCase() + " skill [check skill exists]", "state":""});
       }
