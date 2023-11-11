@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- You MUST include jQuery 3.4+ before Fomantic -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="
 https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
@@ -12,13 +11,24 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
 
 <html>
 <head>
-  <!-- Standard Meta -->
+
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <!-- Site Properties -->
+
   <title>Save Editor</title>
+
+  <script>
+    $(document).ready(function(){
+      $("#flagSearch").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#saveinfo tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
 
   <script>
 
@@ -30,6 +40,9 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
       a.click();
   }
 
+  function resetSave() {
+    let defaultSessions = sessionStorage.getItem("defaultConfig")
+  }
 
   function exportSave() {
     
@@ -102,7 +115,7 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
 <body>
 
   <div class="ui fixed nag" id="fixednag">
-    ensure you back up your save file; this editor is wip and i'm not responsible if your save file corrupts
+    ensure you back up your save file; this editor is wip and i'm not responsible if your save file corrupts | some flags may be incorrectly named; make an issue on github if this is the case
     <i class="close icon"></i>
   </div>
 
@@ -128,10 +141,10 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
         </div>
 
         <div class="ui file action input">
-            <input id="actionfileinput" type="file">
+            <input id="actionfileinput" type="file" accept=".json">
             <label for="actionfileinput" class="ui blue button">
                <i class="upload"></i>
-                  choose save file
+                  choose save file 
             </label>
           </div>
           
@@ -143,8 +156,11 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
         <div class="ui dropdown icon item">
           <i class="wrench icon"></i>
           <div class="menu">
-            <div class="item">
-              Reset 
+            <div class="header">
+              file
+            </div>
+            <div class="item" onclick="resetSave()">
+              Reset
             </div>
             <div class="divider"></div>
             <div class="header">
@@ -158,14 +174,14 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
         <div class="right menu">
           <div class="ui right aligned category search item">
             <div class="ui transparent icon input">
-              <input class="prompt" type="text" placeholder="search flags...">
+              <input class="prompt" type="text" placeholder="search flags..." id="flagSearch">
             </div>
             <div class="results"></div>
           </div>
         </div>
       </div>
       <div class="ui bottom attached segment">
-        
+        <div class="ui scrolling container" style="height: 50%;">
 
         <table class="ui compact celled definition table" id="mtb">
           <thead class="full-width">
@@ -199,15 +215,14 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
           </tbody>
          
         </table>
-
-
+        </div>
 
       </div>
 
 
 
     <div class="ui message">
-      your save file is likely in (placeholder)
+      see the terrible source code for this project <a href="https://github.com/dyno-bytes/precipitation">here</a> | your save file is likely in C:\Program Files (x86)\Steam\userdata\[number]\1337520\remote
     </div>
   </div>
 </div>
@@ -249,17 +264,22 @@ $('#fixednag')
 
     const recognizedFlag = {
       "flags": [
-        {name:"challenge_unlock_acrid_completed",  desc:"unlock acrid yurr"},
-        
       ]
     }
 
-    const addNames = ["huntress", "pilot", "miner", "mercenary", "chef", "mage", "janitor"]
-    
+    const addNames = ["pilot", "miner", "mercenary", "chef", "mage", "janitor", "acrid", "engineer", "bandit", "enforcer", "sniper", "loader", "drifter"]
+    const addSkills = ["x","c","v","r"]
+
     for (let i = 0; i < addNames.length; i++) {
-      console.log("asda");
-      recognizedFlag["flags"].push({name:"challenge_unlock_" + addNames[i] + "_completed", desc:"unlock " + addNames[i] + " yurrr", state:""});
+      recognizedFlag["flags"].push({name:"challenge_unlock_" + addNames[i] + "_completed", desc:"unlock " + addNames[i] + "", state:""});
+      for (let k = 0; k < addSkills.length; k++) {
+        recognizedFlag["flags"].push({name: "challenge_unlock_" + addNames[i] + "_" + addSkills[k] + "2_completed", desc:"unlock " + addNames[i] + " secondary " + addSkills[k].toUpperCase() + " skill [!!]", "state":""});
+      }
     }
+
+
+
+    
 
     if (saveFile.type == "application/json") {
       saveFile.text().then( resp => {
@@ -280,7 +300,7 @@ $('#fixednag')
         document.getElementById('saveinfo').innerHTML = rendered;
 
         sessionStorage.setItem("baseData", JSON.stringify(saveData));
-
+        sessionStorage.setItem("defaultConfig", JSON.stringify(recognizedFlag))
       })
       
 
@@ -292,6 +312,7 @@ $('#fixednag')
 
     document.getElementById("loadingting").className = "ui disabled dimmer"
    </script>
+
 
 <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 <script>
