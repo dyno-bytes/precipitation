@@ -4,7 +4,7 @@
 
 currently supports unlocking of characters & abilities. 
 
-if you know of more flag names you want added; maybe submit an issue or contact me in some other way about
+if you know of more flag names you want added; maybe submit an issue or contact me in some other way about it
 <br/>
 
 if you want to host this locally, all you need to do is host the index.html; all libs are delivered via CDN.
