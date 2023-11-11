@@ -273,7 +273,7 @@ $('#fixednag')
     for (let i = 0; i < addNames.length; i++) {
       recognizedFlag["flags"].push({name:"challenge_unlock_" + addNames[i] + "_completed", desc:"unlock " + addNames[i] + "", state:""});
       for (let k = 0; k < addSkills.length; k++) {
-        recognizedFlag["flags"].push({name: "challenge_unlock_" + addNames[i] + "_" + addSkills[k] + "2_completed", desc:"unlock " + addNames[i] + " secondary " + addSkills[k].toUpperCase() + " skill [!!]", "state":""});
+        recognizedFlag["flags"].push({name: "challenge_unlock_" + addNames[i] + "_" + addSkills[k] + "2_completed", desc:"unlock " + addNames[i] + " alternate " + addSkills[k].toUpperCase() + " skill [check skill exists]", "state":""});
       }
     }
 
