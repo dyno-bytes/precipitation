@@ -271,7 +271,7 @@ $('#fixednag')
     const addSkills = ["x","c","v","z"]
 
     for (let i = 0; i < addNames.length; i++) {
-      if (addNames[i] != "huntress" || addNames[i] != "commando" ) {
+      if (addNames[i] != "huntress" && addNames[i] != "commando" ) {
       recognizedFlag["flags"].push({name:"challenge_unlock_" + addNames[i] + "_completed", desc:"unlock " + addNames[i] + "", state:""});
       }
       for (let k = 0; k < addSkills.length; k++) {
