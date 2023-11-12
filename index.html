@@ -54,8 +54,10 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
     for (let i = 0; i < stateList.length; i++) {
       
       let tableRow = stateList[i].parentElement.parentElement
-      let flagName = tableRow.getElementsByClassName("womper")[0].innerText
+      let flagName = tableRow.getElementsByClassName("yuji")[0].value
       let checked = stateList[i].getElementsByClassName("mike")[0].checked
+      console.log(flagName);
+
 
       newFlagData[flagName] = checked; 
 
@@ -187,7 +189,7 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
           <thead class="full-width">
             <tr>
               <th></th>
-              <th>Flag Name</th>
+              <th>Name</th>
               <th>Description</th>
             </tr>
           </thead>
@@ -208,7 +210,7 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
                 
               </td>
               <td class="womper">{{name}}</td>
-              <td class="descr">{{desc}}</td>
+              <td class="descr">{{desc}}</td><input type="hidden" class="yuji" value="{{flagName}}">
             </tr>
             {{/flags}}
           </script>
@@ -263,26 +265,412 @@ $('#fixednag')
     
     var saveFile = a[0]
 
+    
+
+    const dataStructure = {
+      "characters": {
+        "commando": {
+          desc: "",
+         flagName: "", 
+         abilities: {
+          "x2" : {
+            "name" : "Combat Knife",
+
+            "description" : "Slash enemies for 150% damage, wounding them for 4 seconds. Wounded enemies take an extra 50% damage from all sources."
+
+            },
+
+            "c2" : {
+
+            "name" : "Tactical Slide",
+
+            "description" : "Slide on the ground a short distance. You can fire in either direction while sliding."
+
+            },
+
+            "v2" : {
+
+            "name" : "Point-Blank",
+
+            "description" : "Take out your shotgun and fire, hitting nearby enemies for 6x100% damage."
+
+            },
+         }
+        },
+
+
+        "huntress": {
+          desc: "",
+         flagName: "", 
+         abilities: {
+                    "z2" : {
+
+          "name" : "Pierce",
+
+          "description" : "Hold to charge an arrow shot, firing for up to 1000% damage. \nMove more slowly While casting."
+
+          },
+
+          "x2" : {
+
+          "name" : "Laser Cyclone",
+
+          "description" : "Throw a large, slow-moving glaive, dealing 50% damage over time, before returning."
+
+          },
+
+          "c2" : {
+
+          "name" : "Warp Dart",
+
+          "description" : "Fire a weighted dart, teleporting you to it when it lands. Explodes for 200% damage upon landing."
+
+          },
+         }
+        },
+
+        "bandit": {
+          desc: "Unlock the bandit character",
+         flagName: "bandit", 
+         abilities: {
+          "z2" : {
+
+"name" : "Whip",
+
+"description" : "Crack a whip forward for 200% damage, knocking enemies back."
+
+},
+
+"c2" : {
+
+"name" : "Flashbang",
+
+"description" : "Toss a flash grenade, stunning and blinding all enemies. \nBlinded enemies cannot attack, are slowed and take 25% extra damage. "
+
+},
+
+"v2" : {
+
+"name" : "Standoff",
+
+"description" : "Take aim for a headshot, dealing 500% damage. If this ability kills an enemy, gain 1 temporary stack of Standoff.\nStandoff stacks increase damage by 50% each and last 15 seconds."
+
+},
+         }
+        },
+        
+        "enforcer": {
+          desc: "Unlock the enforcer character",
+         flagName: "enforcer", 
+         abilities: {
+          "z2" : {
+
+"name" : "Shrapnel Grenade",
+
+"description" : "Fire a shrapnel grenade, exploding for 3x60% damage. Holds up to 4 grenades, reactivate when empty to reload your weapon."
+
+},
+
+
+"x2" : {
+
+"name" : "Shield Tackle",
+
+"description" : "Dash forwards, slamming nearby enemies for up to 5x100% damage, knocking them back and stunning them."
+
+},
+
+"v2" : {
+
+"name" : "Disperse",
+
+"description" : "Fire three shotgun blasts for 3x300% damage. More effective on larger enemies. Fires downwards when used airborne."
+
+},
+         }
+        },
+
+        "pilot": {
+          desc: "Unlock the pilot character",
+         flagName: "pilot", 
+         abilities: {
+          "z2" : {
+			"name" : "Rapid Fire",
+			"description" : "Rapidly fire weapon for 75% damage."
+		},
+		"c2" : {
+			"name" : "Aerobatics",
+			"description" : "Dash forwards, briefly becoming invincible.\nCan latch onto and climb walls upon dashing onto one."
+		},
+		"v2" : {
+			"name" : "Aerial Support",
+			"description" : "Mark an enemy in front of you, launching an airstrike for 10x120% damage over time."
+		},
+         }
+        },
+
+
+        "mercenary": {
+          desc: "Unlock the mercenary character",
+         flagName: "mercenary", 
+         abilities: {
+          "x2" : {
+			"name" : "Focused Strike",
+			"description" : "Hold to sheathe your weapon. Release before an incoming strike to parry enemy attacks for 500%-1000% damage to all nearby enemies."
+		},
+		"c2" : {
+			"name" : "Skyward Assault",
+			"description" : "Dash upwards damaging enemies for 200% damage. Press again to slam down for 400% damage."
+		},
+		"v2" : {
+			"name" : "After-Image",
+			"description" : "Focus briefly, channeling energy into an after-image. All attacks are doubled for three seconds. \nStacks twice."
+		},
+         }
+        },
+
+        "miner": {
+          desc: "Unlock the miner character",
+         flagName: "miner", 
+         abilities: {
+          "z2" : {
+
+"name" : "Throwing Axe",
+
+"description" : "Toss a pickaxe for 125% damage. Gain heat on hit.\nWhile Scorching, pickaxes pierce, and get thrown more rapidly."
+
+},
+
+"x2" : {
+
+"name" : "Drill Dash",
+
+"description" : "Dash through the air in your held direction. When contacting an enemy, rapidly drill in place for 150% damage for as long as you have heat."
+
+},
+
+"c2" : {
+
+"name" : "Burnout",
+
+"description" : "Explode in a large area for 500% damage, stunning all enemies. Damages you for 25% max health and gain 25% heat. \nCannot die from self-damage."
+
+},
+         }
+        },
+
+        "sniper": {
+          desc: "Unlock the sniper character",
+         flagName: "sniper", 
+         abilities: {
+          "z2" : {
+
+"name" : "Improvise",
+
+"description" : "Swing your rifle in front of you, dealing 120% damage and knocking enemies back."
+
+},
+
+"x2" : {
+
+"name" : "Quickscope",
+
+"description" : "Rapidly take aim, dealing damage within a moving reticle.\nOn release, fire a bullet for 600% damage."
+
+},
+
+"c2" : {
+
+"name" : "Heavy Recoil",
+
+"description" : "Fire at the ground, launching yourself up and away. Deals 200% damage."
+
+},
+         }
+        },
+
+        "acrid": {
+          desc: "Unlock the acrid character",
+         flagName: "acrid", 
+         abilities: {
+          "z2" : {
+
+"name" : "Corrosive Wounds",
+
+"description" : "Maul enemies for 80% damage. Targets are corroded, and take 10% extra damage from all sources."
+
+},
+
+"x2" : {
+
+"name" : "Toxic Bubble",
+
+"description" : "Spit out a Toxic Bubble, dealing 60% damage over time, and slowing enemies, exploding for 600% damage after 5 seconds. \nCan be pushed by attacking."
+
+},
+
+"c2" : {
+
+"name" : "Dissolving Ambush",
+
+"description" : "Spit out a poisonous blob, forming a puddle that slows and hurts enemies for 100% damage. Use a second time to dissolve into acid and warp to the puddle, dealing 400% damage."
+
+},
+         }
+        },
+        
+        "loader": {
+          desc: "Unlock the loader character",
+         flagName: "loader", 
+         abilities: {
+          "z2" : {
+			"name" : "Bullet Punch",
+			"description" : "Charge up and slam enemies forward, for up to 1000% damage."
+		},
+		"x2" : {
+			"name" : "Short Circuit",
+			"description" : "Crash down and stun enemies in a large radius, for 350% damage."
+		},
+		"v2" : {
+			"name" : "S260 Conduit",
+			"description" : "Place a lightning beacon. Lightning surges to any nearby allies within a radius, dealing 80% damage per second, and massively increasing attack speed."
+		},
+         }
+        },
+        
+        "chef": {
+          desc: "Unlock the chef character",
+         flagName: "chef", 
+         abilities: {
+          "z2" : {
+			"name" : "SLICE",
+			"description" : "STRETCH YOUR ARMS AND SLASH CUSTOMERS FOR 120% DAMAGE."
+		},
+		
+		"c2" : {
+			"name" : "OIL JAR",
+			"description" : "TOSS OUT A FRAGILE JAR OF OIL, SPREADING AND SLOWING CUSTOMERS. SLIDE WHILE IN OIL."
+		},
+		"v2" : {
+			"name" : "COOK",
+			"description" : "RAPIDLY PREPARE MEAL OUT OF CUSTOMERS FOR 6x80% DAMAGE. SLAIN CUSTOMERS BECOME TASTY TEMPORARY MEAL ITEMS. <r>CANNOT CRIT."
+		},
+         }
+        },
+
+        "drifter": {
+          desc: "Unlock the drifter character",
+         flagName: "drifter", 
+         abilities: {
+          "x2" : {
+			"name" : "Scrap Cube",
+			"description" : "Consume a small amount of scrap and toss out a large scrap cube. \nThe cube can be pushed and shattered, dealing 150% damage while pushed. Fragile!"
+		},
+		"c2" : {
+			"name" : "Tornado Slam",
+			"description" : "Spin around wildly, slamming enemies with your bag for 100% damage.\nIncreases your speed and lowers your gravity."
+		},
+		"v2" : {
+			"name" : "Recycle",
+			"description" : "Consume a large amount of scrap to re-roll a pickup."
+		},
+         }
+        },
+        "artificer": {
+          desc: "Unlock the artificer character",
+         flagName: "arti", 
+         abilities: {
+          "x2" : {
+			"name" : "Pulse Spear",
+			"description" : "Toss an electric spear for 300% damage. Cast again mid-flight to pulse the spear, allowing it to briefly pierce through enemies. \nSuccessful pierces refresh your ability to pulse."
+		},
+		"c2" : {
+			"name" : "Tectonic Surge",
+			"description" : "Shatter the earth below you, launching you into the air. Cast mid-air to create a temporary platform to stand on.\nGravity is reduced briefly afterward."
+		},
+		"v2" : {
+			"name" : "Localized Sun",
+			"description" : "Summon a miniature, movement tracking star, dealing 120% damage over time. Explodes for 1000% damage after 5 seconds."
+		},
+         }
+        },
+        
+        "engineer": {
+          desc: "nlock the engineer character",
+         flagName: "engineer", 
+         abilities: {
+          "z2" : {
+
+"name" : "Mortar Barrage",
+
+"description" : "Launch mortar rounds in an arc for 80% damage. Can move while firing."
+
+},
+
+"x2" : {
+
+"name" : "Shockwave  Mine",
+
+"description" : "Drop a defensive mine that knocks enemies back a significant distance for 120% damage. Can trigger up to 3 times.\nHold up to 3."
+
+},
+
+"v2" : {
+
+"name" : "V.0.2 Prototype Laser Turret",
+
+"description" : "Drop a turret that charges up over 8 seconds and fires for 1200% damage  per hit, inheriting all of your items. \nFragile, rapidly damaging itself while firing."
+
+},
+         }
+        },
+        
+
+
+      },
+ 
+
+
+    }
+
     const recognizedFlag = {
       "flags": [
       ]
     }
 
-    const addNames = ["robomando","huntress", "commando", "pilot", "miner", "mercenary", "chef", "artifact", "hand", "acrid", "engineer", "bandit", "enforcer", "sniper", "loader", "drifter"]
-    const addSkills = ["x","c","v","z"]
+    function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }
+  );
+}
+    
 
-    for (let i = 0; i < addNames.length; i++) {
-      if (addNames[i] != "huntress" && addNames[i] != "commando" ) {
-      recognizedFlag["flags"].push({name:"challenge_unlock_" + addNames[i] + "_completed", desc:"unlock " + addNames[i] + "", state:""});
-      }
-      if (addNames[i] != "robomando") {
-      for (let k = 0; k < addSkills.length; k++) {
-        
-        recognizedFlag["flags"].push({name: "challenge_unlock_" + addNames[i] + "_" + addSkills[k] + "2_completed", desc:"unlock " + addNames[i] + " alternate " + addSkills[k].toUpperCase() + " skill [check skill exists]", "state":""});
-        
-      }
+    $.each(dataStructure, function(k,v) {
+      // loop datastructure
+      if (k == "characters") {
+      $.each(v, function(k2,v2) {
+        // in chars
+
+          if (v2.flagName != "") {
+          recognizedFlag["flags"].push({name: toTitleCase(k2), desc: v2.desc, flagName: `challenge_unlock_${v2.flagName}_completed`, state:""})
+          }
+          // push opt abilities
+          
+          $.each(v2.abilities, function(key,val) {
+            recognizedFlag["flags"].push({name: `${toTitleCase(k2)}: ${val.name}`, desc: val.description, flagName: `challenge_unlock_${v2.flagName}_${key}_completed`, state:""})
+          })
+
+      })
+    } else {
+
     }
-    }
+
+
+
+    })
 
 
 
@@ -293,8 +681,8 @@ $('#fixednag')
         var saveData = JSON.parse(resp);
 
         $.each(recognizedFlag["flags"], function(i,v) {
-
-          if (saveData["flags"].includes(v.name)) {
+          console.log(v.flagName)
+          if (saveData["flags"].includes(v.flagName)) {
 
             recognizedFlag["flags"][i].state = "true";
           }
