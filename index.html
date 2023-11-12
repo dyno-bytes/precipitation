@@ -277,8 +277,9 @@ $('#fixednag')
     const dataStructure = {
       "characters": {
         "commando": {
+          noflag:"",
           desc: "",
-         flagName: "", 
+         flagName: "commando", 
          abilities: {
           "x2" : {
             "name" : "Combat Knife",
@@ -308,7 +309,8 @@ $('#fixednag')
 
         "huntress": {
           desc: "",
-         flagName: "", 
+          noflag:"",
+         flagName: "huntress", 
          abilities: {
                     "z2" : {
 
@@ -698,7 +700,7 @@ $('#fixednag')
       $.each(v, function(k2,v2) {
         // in chars
 
-          if (v2.flagName != "") {
+          if (v2.noflag != "") {
           recognizedFlag["flags"].push({name: toTitleCase(k2), desc: v2.desc, flagName: `challenge_unlock_${v2.flagName}_completed`, state:""})
           }
           // push opt abilities
