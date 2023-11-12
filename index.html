@@ -728,7 +728,6 @@ $('#fixednag')
         var saveData = JSON.parse(resp);
 
         $.each(recognizedFlag["flags"], function(i,v) {
-          console.log(v.flagName)
           if (saveData["flags"].includes(v.flagName)) {
 
             recognizedFlag["flags"][i].state = "true";
