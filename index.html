@@ -256,6 +256,13 @@ $('#fixednag')
 
 <script>
     console.log('cheers for using');
+    $.toast({
+    title: 'beta1.1',
+    message: 'if you encounter issues contact me 👍',
+    showProgress: 'bottom',
+    classProgress: 'teal'
+  })
+  ;
     const inputElement = document.getElementById("actionfileinput");
     document.getElementById("loadingting").className = "ui active dimmer";
     inputElement.addEventListener("change", handleFiles, false);
@@ -596,7 +603,7 @@ $('#fixednag')
         },
         
         "engineer": {
-          desc: "nlock the engineer character",
+          desc: "Unlock the engineer character",
          flagName: "engineer", 
          abilities: {
           "z2" : {
@@ -625,6 +632,43 @@ $('#fixednag')
          }
         },
         
+        "han-d": {
+          desc: "Unlock the HAN-D character",
+         flagName: "hand", 
+         abilities: {
+          "x2" : {
+
+"name" : "DRONE - SPEED",
+
+"description" : "FIRE A DRONE FOR 190% DAMAGE WHILE ALSO TEMPORARILY GAINING ATTACK SPEED. GAIN DRONES BY KILLING ENEMIES."
+
+},
+
+"x3" : {
+
+"name" : "DRONE - VENT",
+
+"description" : "FIRE A DRONE FOR 190% DAMAGE WHILE ALSO LOWERING EQUIPMENT COOLDOWNS AND EXTENDING OVERCLOCK DURATION. GAIN DRONES BY KILLING ENEMIES."
+
+},
+
+"x4" : {
+
+"name" : "DRONE - BLAST",
+
+"description" : "FIRE A DRONE THAT EXPLODES ON CONTACT FOR 500% DAMAGE, AT BLINDING SPEEDS, EXTENDING OVERCLOCK DURATION. GAIN DRONES BY KILLING ENEMIES."
+
+},
+
+"v2" : {
+
+"name" : "DISASSEMBLE",
+
+"description" : "TEAR COMBATANTS APART FOR 5x90% DAMAGE, SCALING WITH ATTACK SPEED.\nCAN MOVE SLOWLY WHILE CASTING."
+
+},
+         }
+        },
 
 
       },
