@@ -16,8 +16,7 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="description" content="A save file editor for Risk of Rain Returns">
-  <meta name="google-site-verification" content="wakAJf3-WUULIBBIa9K4_1QvHvFYko2c_UeWtLDwu1Q" />
-   <link rel="icon" href="https://riskofrainreturns.wiki.gg/images/thumb/0/05/Bustlingfungus.png/48px-Bustlingfungus.png">
+
 
   <title>Save Editor</title>
 
@@ -608,6 +607,7 @@ $('#fixednag')
         "engineer": {
           desc: "Unlock the engineer character",
          flagName: "engineer", 
+         optAbilityFlag: "engi",
          abilities: {
           "z2" : {
 
@@ -676,6 +676,9 @@ $('#fixednag')
 
       },
  
+      items: {
+        
+      }
 
 
     }
@@ -707,7 +710,7 @@ $('#fixednag')
           // push opt abilities
           
           $.each(v2.abilities, function(key,val) {
-            recognizedFlag["flags"].push({name: `${toTitleCase(k2)}: ${val.name}`, desc: val.description, flagName: `challenge_unlock_${v2.flagName}_${key}_completed`, state:""})
+            recognizedFlag["flags"].push({name: `${toTitleCase(k2)}: ${val.name}`, desc: val.description, flagName: `challenge_unlock_${"optAbilityFlag" in v2 ? v2.optAbilityFlag: v2.flagName}_${key}_completed`, state:""})
           })
 
       })
@@ -728,6 +731,7 @@ $('#fixednag')
         var saveData = JSON.parse(resp);
 
         $.each(recognizedFlag["flags"], function(i,v) {
+          console.log(v.flagName)
           if (saveData["flags"].includes(v.flagName)) {
 
             recognizedFlag["flags"][i].state = "true";
