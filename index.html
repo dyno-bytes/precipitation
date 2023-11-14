@@ -42,7 +42,11 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
   }
 
   function resetSave() {
-    let defaultSessions = sessionStorage.getItem("defaultConfig")
+    let stateList = document.querySelectorAll('#manthis')
+
+    for (let i = 0; i < stateList.length; i++) {
+        stateList[i].getElementsByClassName("mike")[0].checked = true
+    }
   }
 
   function exportSave() {
@@ -161,7 +165,7 @@ https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js
               file
             </div>
             <div class="item" onclick="resetSave()">
-              Reset
+              Unlock All
             </div>
             <div class="divider"></div>
             <div class="header">
