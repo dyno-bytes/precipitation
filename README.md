@@ -5,5 +5,5 @@
 ~~<br/>~~
 ~~if you want to host this locally, all you need to do is host the index.html; all libs are delivered via CDN.~~
 
-moved to: [precipitation.dyno.cx](precipitation.dyno.cx)
+moved to: [precipitation.dyno.cx](https://precipitation.dyno.cx)
 code hosted [here](https://git.dyno.cx)
